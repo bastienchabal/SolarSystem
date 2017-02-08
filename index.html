@@ -14,7 +14,6 @@
     <body>
 	<p id="toolbar">
 	    <a href="https://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene">Documentation</a>
-	    <a href="mailto:guillaum.bouchard@gmail.com">guillaum.bouchard@gmail.com</a>
 	</p>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js"></script>
 	<script>
@@ -40,25 +39,35 @@
 
    var marsMaterial = new THREE.MeshBasicMaterial({ color: 0xff9999 });
    var mars = new THREE.Mesh(ball, marsMaterial);
-   mars.scale.set(0.15, 0.15, 0.15);
+   mars.scale.set(0.3, 0.3, 0.3);
    sun.add(mars);
-   mars.position.x += 6;
+   mars.position.x += 7;
 
    var earthMaterial = new THREE.MeshBasicMaterial({ color: 0x095999 });
    var earth = new THREE.Mesh(ball, earthMaterial);
-   earth.scale.set(0.2, 0.2, 0.2);
+   earth.scale.set(0.4, 0.4, 0.4);
    sun.add(earth);
    earth.position.x = 5;
 
    var moonMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
    var moon = new THREE.Mesh(ball, moonMaterial);
-   moon.scale.set(0.1, 0.1, 0.1);
+   moon.scale.set(0.2, 0.2, 0.2);
    earth.add(moon);
    moon.position.x += 2;
 
+  var geometry = new THREE.Geometry();
+  var dotMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
 	 // This is executed for each frames
 	 function render() {
+      /* var moonCoo : Vector3 = transform.TransformPoint(moon);
+       geometry.vertices.push(moonCoo);
+       var dot = new THREE.Line(geometry, dotMaterial);
+       solarSystem.add(dot);*/
 	     requestAnimationFrame( render );
+       var moonCoo : Vector3 = transform.TransformPoint(moon);
+        geometry.vertices.push(moonCoo);
+        var dot = new THREE.Line(geometry, dotMaterial);
+        solarSystem.add(dot);
 	     // Animation code goes here
        sun.rotation.z += 0.01;
        earth.rotation.z += 0.1;
