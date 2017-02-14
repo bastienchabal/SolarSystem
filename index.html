@@ -27,14 +27,19 @@
    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
     var speed = 0.5;
-    var zoom = 1;
+    var zoom = 1.3;
 
 	 camera.position.z = 5;
 
-   //Create a front SpotLight and turn on shadows for the light
+   //Initialisation of the lights
+  var light = new THREE.PointLight( 0xffffff, 2, 100 );
+  light.position.set( 0, 0, 0 );
+  scene.add(light);
+  var ambient = new THREE.AmbientLight( 0x555555 );
+  scene.add(ambient);
 
 
-   // Initialisation of your objects / materials / light
+   // Initialisation of your objects / materials
     var solarSystem = new THREE.Object3D();
    var pivotSun = new THREE.Object3D();
 	 var pivotMercury = new THREE.Object3D();
@@ -73,79 +78,99 @@
 	 solarSystem.add(pivotSun);
 
 
-  	 var ball = new THREE.SphereGeometry(1, 32, 32);
-
+  var ball = new THREE.SphereGeometry(1, 32, 32);
+  //Adding texture/bumps/clouds following this : http://learningthreejs.com/blog/2013/09/16/how-to-make-the-earth-in-webgl/
   // Sun
-	 var sunMaterial = new THREE.MeshBasicMaterial( { color: 0xff4500 } );
+	 var sunMaterial = new THREE.MeshPhongMaterial();
+   sunMaterial.map = THREE.ImageUtils.loadTexture('images/sunmap.jpg');
+
 	 var sun = new THREE.Mesh(ball, sunMaterial);
    sun.scale.set(zoom, zoom, zoom);
    pivotSun.add(sun);
 
   //Mercury
-  var mercuryMaterial = new THREE.MeshBasicMaterial( { color:  0xd35400  } );
+  var mercuryMaterial = new THREE.MeshPhongMaterial();
 	 var mercury = new THREE.Mesh(ball, mercuryMaterial);
+   mercuryMaterial.map = THREE.ImageUtils.loadTexture('images/mercurymap.jpg');
+   mercuryMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/mercurybump.jpg');
 	 mercury.scale.set(0.05*zoom, 0.05*zoom, 0.05*zoom);
 	 pivotMercury.add(mercury);
 	 mercury.position.x = 1.5*zoom;
 
   //Venus
-  var venusMaterial = new THREE.MeshBasicMaterial( { color:  0xd9a7d0 } );
+  var venusMaterial = new THREE.MeshPhongMaterial();
 	 var venus = new THREE.Mesh(ball, venusMaterial);
+   venusMaterial.map = THREE.ImageUtils.loadTexture('images/venusmap.jpg');
+   venusMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/venusbump.jpg');
 	 venus.scale.set(0.08*zoom, 0.08*zoom, 0.08*zoom);
 	 pivotVenus.add(venus);
 	 venus.position.x = 1.9*zoom;
 
   //Earth
-   var earthMaterial = new THREE.MeshBasicMaterial({ color: 0x095999 });
+   var earthMaterial = new THREE.MeshPhongMaterial();
    var earth = new THREE.Mesh(ball, earthMaterial);
+   earthMaterial.map = THREE.ImageUtils.loadTexture('images/earthmap.jpg');
+   earthMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/earthbump.jpg');
+   earthMaterial.bumpScale = 0.05;
    earth.scale.set(0.09*zoom, 0.09*zoom, 0.09*zoom);
    pivotEarth.add(earth);
    earth.position.x = 2.7*zoom;
   //Moon
-   var moonMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+   var moonMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
    var moon = new THREE.Mesh(ball, moonMaterial);
+   moonMaterial.map = THREE.ImageUtils.loadTexture('images/moonmap.jpg');
+   moonMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/moonbump.jpg');
    moon.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
    earth.add(moon);
    moon.position.x = 1.5*zoom;
 
   //Mars
-    var marsMaterial = new THREE.MeshBasicMaterial({ color: 0xff9999 });
+    var marsMaterial = new THREE.MeshPhongMaterial();
     var mars = new THREE.Mesh(ball, marsMaterial);
+    marsMaterial.map = THREE.ImageUtils.loadTexture('images/marsmap.jpg');
+    marsMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/marsbump.jpg');
     mars.scale.set(0.045*zoom, 0.045*zoom, 0.045*zoom);
     pivotMars.add(mars);
     mars.position.x = 3.2*zoom;
 
 
   //Jupiter
-  var jupiterMaterial = new THREE.MeshBasicMaterial( { color:  0xeeba09 });
+  var jupiterMaterial = new THREE.MeshPhongMaterial();
 	 var jupiter = new THREE.Mesh(ball, jupiterMaterial);
+jupiterMaterial.map = THREE.ImageUtils.loadTexture('images/jupitermap.jpg');
 	 jupiter.scale.set(0.3*zoom, 0.3*zoom, 0.3*zoom);
 	 pivotJupiter.add(jupiter);
 	 jupiter.position.x = 4.2*zoom;
 
   //Saturne
-  var saturnMaterial = new THREE.MeshBasicMaterial( { color: 0xf7dc6f });
+  var saturnMaterial = new THREE.MeshPhongMaterial();
   var saturn = new THREE.Mesh(ball, saturnMaterial);
+  saturnMaterial.map = THREE.ImageUtils.loadTexture('images/saturnmap.jpg');
+
   saturn.scale.set(0.25*zoom, 0.25*zoom, 0.25*zoom);
   pivotSaturn.add(saturn);
   saturn.position.x = 5.5*zoom;
 
   //Uranus
-  var uranusMaterial = new THREE.MeshBasicMaterial( { color:  0xaed6f1 });
+  var uranusMaterial = new THREE.MeshPhongMaterial( { color:  0xaed6f1 });
 	 var uranus = new THREE.Mesh(ball, uranusMaterial);
+   uranusMaterial.map = THREE.ImageUtils.loadTexture('images/uranusmap.jpg');
+
 	 uranus.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
 	 pivotUranus.add(uranus);
 	 uranus.position.x = 6.5*zoom;
 
   //Neptune
-  var neptuneMaterial = new THREE.MeshBasicMaterial( { color:  0x2471a3 });
+  var neptuneMaterial = new THREE.MeshPhongMaterial( { color:  0x2471a3 });
 	 var neptune = new THREE.Mesh(ball, neptuneMaterial);
+   neptuneMaterial.map = THREE.ImageUtils.loadTexture('images/neptunemap.jpg');
+
 	 neptune.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
 	 pivotNeptune.add(neptune);
 	 neptune.position.x = 7.5*zoom;
 
   //Pluto
-  /*var plutonMaterial = new THREE.MeshBasicMaterial({ color:  0xc6e3e8 });
+  /*var plutonMaterial = new THREE.MeshPhongMaterial({ color:  0xc6e3e8 });
 	 var pluton = new THREE.Mesh(ball, plutonMaterial);
 	 pluton.scale.set(0.02*zoom, 0.02*zoom, 0.02*zoom);
 	 pivotSun.add(pluton);
@@ -166,7 +191,7 @@
 	     pivotSaturn.rotation.y += 0.03 *speed;
 	     pivotUranus.rotation.y += 0.02 *speed;
 	     pivotNeptune.rotation.y += 0.01 *speed;
-	     pivotSun.rotation.z += 0.005 *speed;
+	     pivotSun.rotation.y += 0.005 *speed;
 	     renderer.render( scene, camera );
 	 }
 	 render();
