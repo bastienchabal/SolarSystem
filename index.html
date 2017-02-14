@@ -24,57 +24,110 @@
 	 renderer.setSize( window.innerWidth, window.innerHeight );
 	 renderer.shadowMap.enabled = true;
 	 document.body.appendChild( renderer.domElement );
+   renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+    document.body.appendChild( renderer.domElement );
+    var speed = 1;
+    var zoom = 1;
 
 	 camera.position.z = 5;
 
-	 // Initialisation of your objects / materials / light
-	 var solarSystem = new THREE.Object3D();
+   //Create a front SpotLight and turn on shadows for the light
+
+
+   // Initialisation of your objects / materials / light
+    var solarSystem = new THREE.Object3D();
+   var pivotSun = new THREE.Object3D();
+	 var pivotMercury = new THREE.Object3D();
+	 var pivotVenus = new THREE.Object3D();
+	 var pivotEarth = new THREE.Object3D();
+	 var pivotMars = new THREE.Object3D();
+	 var pivotJupiter = new THREE.Object3D();
+	 var pivotSaturn = new THREE.Object3D();
+	 var pivotUranus = new THREE.Object3D();
+	 var pivotNeptune = new THREE.Object3D();
+	 var pivotSun = new THREE.Object3D();
+
 	 scene.add(solarSystem);
 
-	 var ball = new THREE.SphereGeometry(1, 32, 32);
+	 scene.add(pivotSun);
+	 scene.add(pivotMercury);
+	 scene.add(pivotVenus);
+	 scene.add(pivotEarth);
+	 scene.add(pivotMars);
+	 scene.add(pivotJupiter);
+	 scene.add(pivotSaturn);
+	 scene.add(pivotUranus);
+	 scene.add(pivotNeptune);
+	 scene.add(pivotSun);
+
+   solarSystem.scale.set(0.4*zoom, 0.4*zoom, 0.4*zoom);
+	 solarSystem.add(pivotSun);
+	 solarSystem.add(pivotMercury);
+	 solarSystem.add(pivotVenus);
+	 solarSystem.add(pivotEarth);
+	 solarSystem.add(pivotMars);
+	 solarSystem.add(pivotJupiter);
+	 solarSystem.add(pivotSaturn);
+	 solarSystem.add(pivotUranus);
+	 solarSystem.add(pivotNeptune);
+	 solarSystem.add(pivotSun);
+
+
+  	 var ball = new THREE.SphereGeometry(1, 32, 32);
+
+  // Sun
 	 var sunMaterial = new THREE.MeshBasicMaterial( { color: 0xff4500 } );
 	 var sun = new THREE.Mesh(ball, sunMaterial);
-   sun.scale.set(0.4, 0.4, 0.4);
-   solarSystem.add(sun);
+   sun.scale.set(zoom, zoom, zoom);
+   pivotSun.add(sun);
 
-   var marsMaterial = new THREE.MeshBasicMaterial({ color: 0xff9999 });
-   var mars = new THREE.Mesh(ball, marsMaterial);
-   mars.scale.set(0.3, 0.3, 0.3);
-   sun.add(mars);
-   mars.position.x += 7;
+  //Mercury
 
+  //Venus
+
+
+  //Earth
    var earthMaterial = new THREE.MeshBasicMaterial({ color: 0x095999 });
    var earth = new THREE.Mesh(ball, earthMaterial);
-   earth.scale.set(0.4, 0.4, 0.4);
-   sun.add(earth);
-   earth.position.x = 5;
-
+   earth.scale.set(0.09*zoom, 0.09*zoom, 0.09*zoom);
+   pivotEarth.add(earth);
+   earth.position.x = 2.7*zoom;
+  //Moon
    var moonMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
    var moon = new THREE.Mesh(ball, moonMaterial);
-   moon.scale.set(0.2, 0.2, 0.2);
+   moon.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
    earth.add(moon);
-   moon.position.x += 2;
+   moon.position.x = 1.5*zoom;
 
-  var geometry = new THREE.Geometry();
-  var dotMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+  //Mars
+    var marsMaterial = new THREE.MeshBasicMaterial({ color: 0xff9999 });
+    var mars = new THREE.Mesh(ball, marsMaterial);
+    mars.scale.set(0.045*zoom, 0.045*zoom, 0.045*zoom);
+    pivotMars.add(mars);
+    mars.position.x = 3.2*zoom;
+
+
+  //Jupiter
+
+  //Saturne
+
+  //Uranus
+
+  //Neptune
+
+  //Pluton
+
+    solarSystem.rotation.x = 0.3;
 	 // This is executed for each frames
 	 function render() {
-      /* var moonCoo : Vector3 = transform.TransformPoint(moon);
-       geometry.vertices.push(moonCoo);
-       var dot = new THREE.Line(geometry, dotMaterial);
-       solarSystem.add(dot);*/
+
 	     requestAnimationFrame( render );
-       var moonCoo : Vector3 = transform.TransformPoint(moon);
-        geometry.vertices.push(moonCoo);
-        var dot = new THREE.Line(geometry, dotMaterial);
-        solarSystem.add(dot);
 	     // Animation code goes here
-       sun.rotation.z += 0.01;
-       earth.rotation.z += 0.1;
-      // moon.position.y += 0.01;
+       pivotSun.rotation.z += 0.005 *speed;
+        pivotEarth.rotation.y += 0.06 *speed;
+        pivotMars.rotation.y += 0.05 *speed;
 	     renderer.render( scene, camera );
 	 }
-
 	 render();
 	</script>
     </body>
