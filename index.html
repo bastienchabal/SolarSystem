@@ -26,7 +26,7 @@
 	 document.body.appendChild( renderer.domElement );
    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
-    var speed = 1;
+    var speed = 0.5;
     var zoom = 1;
 
 	 camera.position.z = 5;
@@ -82,9 +82,18 @@
    pivotSun.add(sun);
 
   //Mercury
+  var mercuryMaterial = new THREE.MeshBasicMaterial( { color:  0xd35400  } );
+	 var mercury = new THREE.Mesh(ball, mercuryMaterial);
+	 mercury.scale.set(0.05*zoom, 0.05*zoom, 0.05*zoom);
+	 pivotMercury.add(mercury);
+	 mercury.position.x = 1.5*zoom;
 
   //Venus
-
+  var venusMaterial = new THREE.MeshBasicMaterial( { color:  0xd9a7d0 } );
+	 var venus = new THREE.Mesh(ball, venusMaterial);
+	 venus.scale.set(0.08*zoom, 0.08*zoom, 0.08*zoom);
+	 pivotVenus.add(venus);
+	 venus.position.x = 1.9*zoom;
 
   //Earth
    var earthMaterial = new THREE.MeshBasicMaterial({ color: 0x095999 });
@@ -108,14 +117,39 @@
 
 
   //Jupiter
+  var jupiterMaterial = new THREE.MeshBasicMaterial( { color:  0xeeba09 });
+	 var jupiter = new THREE.Mesh(ball, jupiterMaterial);
+	 jupiter.scale.set(0.3*zoom, 0.3*zoom, 0.3*zoom);
+	 pivotJupiter.add(jupiter);
+	 jupiter.position.x = 4.2*zoom;
 
   //Saturne
+  var saturnMaterial = new THREE.MeshBasicMaterial( { color: 0xf7dc6f });
+  var saturn = new THREE.Mesh(ball, saturnMaterial);
+  saturn.scale.set(0.25*zoom, 0.25*zoom, 0.25*zoom);
+  pivotSaturn.add(saturn);
+  saturn.position.x = 5.5*zoom;
 
   //Uranus
+  var uranusMaterial = new THREE.MeshBasicMaterial( { color:  0xaed6f1 });
+	 var uranus = new THREE.Mesh(ball, uranusMaterial);
+	 uranus.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
+	 pivotUranus.add(uranus);
+	 uranus.position.x = 6.5*zoom;
 
   //Neptune
+  var neptuneMaterial = new THREE.MeshBasicMaterial( { color:  0x2471a3 });
+	 var neptune = new THREE.Mesh(ball, neptuneMaterial);
+	 neptune.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
+	 pivotNeptune.add(neptune);
+	 neptune.position.x = 7.5*zoom;
 
-  //Pluton
+  //Pluto
+  /*var plutonMaterial = new THREE.MeshBasicMaterial({ color:  0xc6e3e8 });
+	 var pluton = new THREE.Mesh(ball, plutonMaterial);
+	 pluton.scale.set(0.02*zoom, 0.02*zoom, 0.02*zoom);
+	 pivotSun.add(pluton);
+	 pluton.position.x = 10*zoom;*/
 
     solarSystem.rotation.x = 0.3;
 	 // This is executed for each frames
@@ -123,9 +157,16 @@
 
 	     requestAnimationFrame( render );
 	     // Animation code goes here
-       pivotSun.rotation.z += 0.005 *speed;
-        pivotEarth.rotation.y += 0.06 *speed;
-        pivotMars.rotation.y += 0.05 *speed;
+       pivotMercury.rotation.y += 0.08 *speed;
+	     pivotVenus.rotation.y += 0.07 *speed;
+	     pivotEarth.rotation.y += 0.06 *speed;
+       earth.rotation.y += 0.03 * speed; // For the moon
+	     pivotMars.rotation.y += 0.05 *speed;
+	     pivotJupiter.rotation.y += 0.04 *speed;
+	     pivotSaturn.rotation.y += 0.03 *speed;
+	     pivotUranus.rotation.y += 0.02 *speed;
+	     pivotNeptune.rotation.y += 0.01 *speed;
+	     pivotSun.rotation.z += 0.005 *speed;
 	     renderer.render( scene, camera );
 	 }
 	 render();
