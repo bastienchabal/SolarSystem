@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
 	<meta charset="utf-8">
-	<title>My first three.js app</title>
+	<title>Solar System</title>
   <div style='position:absolute'>
 	<button onclick='switchValue(this.innerHTML);'>Sun</button>
 	<button onclick='switchValue(this.innerHTML);'>Mercury</button>
@@ -99,6 +99,7 @@
    sunMaterial.map = THREE.ImageUtils.loadTexture('images/sunmap.jpg');
 
 	 var sun = new THREE.Mesh(ball, sunMaterial);
+   sunMaterial.side = THREE.BackSide;
    sun.scale.set(zoom, zoom, zoom);
    pivotSun.add(sun);
 
