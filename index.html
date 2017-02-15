@@ -3,6 +3,19 @@
     <head>
 	<meta charset="utf-8">
 	<title>My first three.js app</title>
+  <div style='position:absolute'>
+	<button onclick='switchValue(this.innerHTML);'>Sun</button>
+	<button onclick='switchValue(this.innerHTML);'>Mercury</button>
+	<button onclick='switchValue(this.innerHTML);'>Venus</button>
+	<button onclick='switchValue(this.innerHTML);'>Earth</button>
+	<button onclick='switchValue(this.innerHTML);'>Mars</button>
+	<button onclick='switchValue(this.innerHTML);'>Jupiter</button>
+	<button onclick='switchValue(this.innerHTML);'>Saturn</button>
+	<button onclick='switchValue(this.innerHTML);'>Uranus</button>
+	<button onclick='switchValue(this.innerHTML);'>Neptune</button>
+	<button onclick='switchValue(this.innerHTML);'>Pluto</button>
+
+</div>
 	<style>
 	 body { margin: 0; }
 	 canvas { width: 100%; height: 90% }
@@ -26,11 +39,10 @@
 	 document.body.appendChild( renderer.domElement );
    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     document.body.appendChild( renderer.domElement );
-    var speed = 0.5;
+    var speed = 0.1;
     var zoom = 1.3;
 
-
-	 //camera.position.z = 5;
+//	 camera.position.z = 5;
 
    //Initialisation of the lights
   var light = new THREE.PointLight( 0xffffff, 2, 100 );
@@ -51,7 +63,7 @@
 	 var pivotSaturn = new THREE.Object3D();
 	 var pivotUranus = new THREE.Object3D();
 	 var pivotNeptune = new THREE.Object3D();
-	 var pivotSun = new THREE.Object3D();
+	 var pivotPluto = new THREE.Object3D();
 
 	 scene.add(solarSystem);
 
@@ -64,9 +76,10 @@
 	 scene.add(pivotSaturn);
 	 scene.add(pivotUranus);
 	 scene.add(pivotNeptune);
-	 scene.add(pivotSun);
+	 scene.add(pivotPluto);
 
    solarSystem.scale.set(0.4*zoom, 0.4*zoom, 0.4*zoom);
+
 	 solarSystem.add(pivotSun);
 	 solarSystem.add(pivotMercury);
 	 solarSystem.add(pivotVenus);
@@ -76,7 +89,7 @@
 	 solarSystem.add(pivotSaturn);
 	 solarSystem.add(pivotUranus);
 	 solarSystem.add(pivotNeptune);
-	 solarSystem.add(pivotSun);
+	 solarSystem.add(pivotPluto);
 
 
   var ball = new THREE.SphereGeometry(1, 32, 32);
@@ -94,6 +107,7 @@
 	 var mercury = new THREE.Mesh(ball, mercuryMaterial);
    mercuryMaterial.map = THREE.ImageUtils.loadTexture('images/mercurymap.jpg');
    mercuryMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/mercurybump.jpg');
+   mercuryMaterial.bumpScale = 0.03;
 	 mercury.scale.set(0.05*zoom, 0.05*zoom, 0.05*zoom);
 	 pivotMercury.add(mercury);
 	 mercury.position.x = 1.5*zoom;
@@ -103,6 +117,7 @@
 	 var venus = new THREE.Mesh(ball, venusMaterial);
    venusMaterial.map = THREE.ImageUtils.loadTexture('images/venusmap.jpg');
    venusMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/venusbump.jpg');
+   venusMaterial.bumpScale = 0.03;
 	 venus.scale.set(0.08*zoom, 0.08*zoom, 0.08*zoom);
 	 pivotVenus.add(venus);
 	 venus.position.x = 1.9*zoom;
@@ -116,6 +131,7 @@
    earth.scale.set(0.09*zoom, 0.09*zoom, 0.09*zoom);
    pivotEarth.add(earth);
    earth.position.x = 2.7*zoom;
+
   //Moon
    var moonMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
    var moon = new THREE.Mesh(ball, moonMaterial);
@@ -153,7 +169,7 @@ jupiterMaterial.map = THREE.ImageUtils.loadTexture('images/jupitermap.jpg');
   saturn.position.x = 5.5*zoom;
 
   //Uranus
-  var uranusMaterial = new THREE.MeshPhongMaterial( { color:  0xaed6f1 });
+  var uranusMaterial = new THREE.MeshPhongMaterial();
 	 var uranus = new THREE.Mesh(ball, uranusMaterial);
    uranusMaterial.map = THREE.ImageUtils.loadTexture('images/uranusmap.jpg');
 
@@ -162,28 +178,77 @@ jupiterMaterial.map = THREE.ImageUtils.loadTexture('images/jupitermap.jpg');
 	 uranus.position.x = 6.5*zoom;
 
   //Neptune
-  var neptuneMaterial = new THREE.MeshPhongMaterial( { color:  0x2471a3 });
+  var neptuneMaterial = new THREE.MeshPhongMaterial();
 	 var neptune = new THREE.Mesh(ball, neptuneMaterial);
    neptuneMaterial.map = THREE.ImageUtils.loadTexture('images/neptunemap.jpg');
-
 	 neptune.scale.set(0.1*zoom, 0.1*zoom, 0.1*zoom);
 	 pivotNeptune.add(neptune);
 	 neptune.position.x = 7.5*zoom;
 
   //Pluto
-  /*var plutonMaterial = new THREE.MeshPhongMaterial({ color:  0xc6e3e8 });
-	 var pluton = new THREE.Mesh(ball, plutonMaterial);
-	 pluton.scale.set(0.02*zoom, 0.02*zoom, 0.02*zoom);
-	 pivotSun.add(pluton);
-	 pluton.position.x = 10*zoom;*/
+  plutoMaterial = new THREE.MeshPhongMaterial();
+	 var pluto = new THREE.Mesh(ball, plutoMaterial);
+   plutoMaterial.map = THREE.ImageUtils.loadTexture('images/plutomap.jpg');
+   plutoMaterial.bumpMap  = THREE.ImageUtils.loadTexture('images/plutobump.jpg');
+	 pluto.scale.set(0.02*zoom, 0.02*zoom, 0.02*zoom);
+	 pivotPluto.add(pluto);
+	 pluto.position.x = 10*zoom;
+
    pivotEarth.add(camera);
    camera.position.x = 2.7*zoom + 0.5;
    camera.lookAt(new THREE.Vector3(0,0,0));
 
-    solarSystem.rotation.x = 0.3;
+   //solarSystem.rotation.x = 0.3;
+
+    var currentMesh	= null
+    function switchValue(type){
+      currentMesh && scene.remove(currentMesh)
+      if( type === 'Sun' ){
+        pivotSun.add(camera);
+        camera.position.x = 10;
+      }else if( type === 'Mercury' ){
+        pivotMercury.add(camera);
+        camera.position.x = 1.5*zoom + 0.5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Venus' ){
+        pivotVenus.add(camera);
+        camera.position.x = 1.9*zoom + 0.5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Earth' ){
+        pivotEarth.add(camera);
+        camera.position.x = 2.7*zoom + 0.5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Mars' ){
+        pivotMars.add(camera);
+        camera.position.x = 3.2*zoom + 0.5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Jupiter' ){
+        pivotJupiter.add(camera);
+        camera.position.x = 4.2*zoom + 2;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Saturn' ){
+        pivotSaturn.add(camera);
+        camera.position.x = 5.5*zoom + 2;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Uranus' ){
+        pivotUranus.add(camera);
+        camera.position.x = 6.5*zoom + 2;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Neptune' ){
+        pivotNeptune.add(camera);
+        camera.position.x = 7.5*zoom + 0.5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else if( type === 'Pluto' ){
+        pivotPluto.add(camera);
+        camera.position.x = 10*zoom + 0.5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
+      }else	console.assert(false)
+      scene.add(mesh)
+      currentMesh	= mesh
+      location.hash	= type
+    }
 	 // This is executed for each frames
 
-   var followMaterial = new THREE.MeshBasicMaterial( { color : 0xffffff } );
 	 function render() {
 
 	     requestAnimationFrame( render );
@@ -197,6 +262,7 @@ jupiterMaterial.map = THREE.ImageUtils.loadTexture('images/jupitermap.jpg');
 	     pivotSaturn.rotation.y += 0.03 *speed;
 	     pivotUranus.rotation.y += 0.02 *speed;
 	     pivotNeptune.rotation.y += 0.01 *speed;
+       pivotPluto.rotation.y += 0.001 *speed;
 	     pivotSun.rotation.y += 0.005 *speed;
 
        /*var earthFollow = new THREE.Mesh(ball, followMaterial);
